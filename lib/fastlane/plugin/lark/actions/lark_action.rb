@@ -7,17 +7,19 @@ module Fastlane
       def self.run(params)
         UI.message("The lark plugin is working!")
 
-        webhook = params["webhook"]
-        content = params["content"]
+        webhook = params[:webhook]
+        content = params[:content]
 
-        params = {
+        parameters = {
           "msg_type" => "text",
           "content" => {
             "text" => content
           }
         }
 
-        response = Net::HTTP.post_form URI(webhook), params
+        UI.message("Start post message to lark...")
+
+        response = Net::HTTP.post_form URI(webhook), parameters
         result = JSON.parse(response.body)
 
         status_code = result["StatusCode"]
