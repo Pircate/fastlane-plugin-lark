@@ -10,15 +10,6 @@ module Fastlane
         webhook = params[:webhook]
         content = params[:content]
 
-        parameters = {
-          'msg_type' => 'text',
-          'content' => {
-            'text' => content
-          }
-        }
-
-        UI.message(parameters)
-
         UI.message("Start post message to lark...")
 
         uri = URI.parse(webhook)
