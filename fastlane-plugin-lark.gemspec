@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = 'gao497868860@gmail.com'
 
   spec.summary       = 'publish notification to lark.'
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-lark"
+  spec.homepage      = "https://github.com/Pircate/fastlane-plugin-lark"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
