@@ -11,19 +11,32 @@ module Fastlane
         content = params[:content]
 
         parameters = {
-          "msg_type" => "text",
-          "content" => {
-            "text" => content
+          'msg_type' => 'text',
+          'content' => {
+            'text' => content
           }
         }
 
+        UI.message(parameters)
+
         UI.message("Start post message to lark...")
 
-        response = Net::HTTP.post_form URI(webhook), parameters
-        result = JSON.parse(response.body)
+        uri = URI.parse(webhook)
+        https = Net::HTTP.new(uri.host, uri.port)
+        https.use_ssl = true
+        req = Net::HTTP::Post.new(uri.request_uri)
+        req.body = { 
+          'msg_type' => 'text',
+          'content' => {
+            'text': content
+          }
+        }.to_json
+        req.content_type = 'application/json'
+        resp = https.request(req)
+        json = JSON.parse(resp.body)
 
-        status_code = result["StatusCode"]
-        status_message = result["StatusMessage"]
+        status_code = json["StatusCode"]
+        status_message = json["StatusMessage"]
 
         if status_code != 0
           UI.error('lark error message: ' + status_message)
